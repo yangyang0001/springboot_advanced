@@ -152,7 +152,7 @@ agent JAR 打包后会同时存在两处，任选其一：
 ```
 -javaagent:D:\Repository\com\deepblue\filte-agent\1.0.0\filte-agent-1.0.0.jar
 -Dfilte.black.enabled=false
--Dfilte.welth.enabled=false
+-Dfilte.white.enabled=false
 ```
 
 5. 点击 **OK** 保存，正常启动即可。
