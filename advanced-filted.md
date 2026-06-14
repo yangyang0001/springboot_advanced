@@ -99,7 +99,7 @@ public void sendMessage(List<String> items, String isp) {
 将 `filte-agent/target/filte-agent-1.0.0.jar` 放到服务器，启动命令加上 `-javaagent`：
 
 ```bash
-java -javaagent:/opt/filte-agent-1.0.0.jar \
+java -javaagent:filte-agent-1.0.0.jar \
      -jar your-spring-boot-app.jar
 ```
 
@@ -213,7 +213,7 @@ FilteAdvancedAspect handler.filteHandle end uuid: a3f9..., cost time: 12ms
 ### 示例：只开启白名单 + 去重，其余全部关闭
 
 ```bash
-java -javaagent:/opt/filte-agent-1.0.0.jar \
+java -javaagent:filte-agent-1.0.0.jar \
      -Dfilte.black.enabled=false  \
      -Dfilte.welth.enabled=false  \
      -Dfilte.stop.enabled=false   \
@@ -227,7 +227,7 @@ java -javaagent:/opt/filte-agent-1.0.0.jar \
 ### 示例：全部关闭（透传模式，切面只记录日志不做任何拦截）
 
 ```bash
-java -javaagent:/opt/filte-agent-1.0.0.jar \
+java -javaagent:filte-agent-1.0.0.jar \
      -Dfilte.white.enabled=false \
      -Dfilte.black.enabled=false \
      -Dfilte.welth.enabled=false \
