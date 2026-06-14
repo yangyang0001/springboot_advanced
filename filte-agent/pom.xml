@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.deepblue</groupId>
+        <artifactId>advanced-filted</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>filte-agent</artifactId>
+    <packaging>jar</packaging>
+
+    <!-- Agent 实现模块，对外完全不可见，仅通过: -javaagent:/filte-agent-1.0.0.jar 在 JVM 启动时加载切面，接入方无需感知此模块 -->
+    <dependencies>
+        <!-- 注解 API -->
+        <dependency>
+            <groupId>com.deepblue</groupId>
+            <artifactId>filte-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Spring AOP + AutoConfiguration -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 跳过 Spring Boot 可执行 fat JAR，输出普通 JAR 供 -javaagent 使用 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- MANIFEST.MF 声明 Premain-Class -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Premain-Class>com.deepblue.agent.FilteAgentMain</Premain-Class>
+                            <Agent-Class>com.deepblue.agent.FilteAgentMain</Agent-Class>
+                            <Can-Redefine-Classes>false</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>false</Can-Retransform-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
