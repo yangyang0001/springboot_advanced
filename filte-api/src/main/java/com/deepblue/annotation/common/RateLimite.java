@@ -29,6 +29,6 @@ public @interface RateLimite {
     String[] paramNames() default {"records", "smsAccount"};
 
     // 限流方式
-LimitEnum limite() default LimitEnum.LIMIT_BATCH;
+    LimitEnum limite() default LimitEnum.LIMIT_BATCH;
 
 }
